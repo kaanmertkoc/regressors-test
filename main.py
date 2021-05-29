@@ -17,7 +17,7 @@ from sklearn.tree import DecisionTreeRegressor
 # Data Preprocessing part
 # loading dataset into x and y
 dataset = pd.read_csv('insurance.csv')
-# loading dataset into X dependant variable and y independent variable
+# loading dataset into X independent variable and y dependent variable
 X = dataset.iloc[:, :-1].values
 y = dataset.iloc[:, -1].values
 # there are categorical data in my dataset insurance.csv. In order to make a prediction we need to convert that
@@ -33,7 +33,7 @@ y_1 = dataset.iloc[:, -1].values
 
 # Regression Part
 
-# This method makes polynomial regression prediction. It takes two array, X dependant variable and y independent
+# This method makes polynomial regression prediction. It takes two array, X independent variable and y dependent
 # variable. It does not return anything it prints the r2_score that this prediction has.
 def polynomial_regressor(X, y):
     # splitting dataset into train and test. We take 20 percent of the train data to test our result.
@@ -52,11 +52,12 @@ def polynomial_regressor(X, y):
     y_pred = regressor.predict(poly_reg.transform(X_test))
     # making our print prettier, although we don't print any array at the moment.
     np.set_printoptions(precision=2)
+    print(np.concatenate((y_pred.reshape(len(y_pred), 1), y_test.reshape(len(y_test),1)), 1))
     # printing r2_score based on test and prediction values. Our performance increases when this score goes to 1.
     print(r2_score(y_test, y_pred))
 
 
-# This method makes random forest regression prediction. It takes two array, X dependant variable and y independent
+# This method makes random forest regression prediction. It takes two array, X independent variable and y dependent
 # variable. It does not return anything it prints the r2_score that this prediction has.
 def random_forest_regression(X, y):
     # splitting dataset into train and test. We take 20 percent of the train data to test our result.
@@ -71,11 +72,12 @@ def random_forest_regression(X, y):
     y_pred = regressor.predict(X_test)
     # making our print prettier, although we don't print any array at the moment.
     np.set_printoptions(precision=2)
+    print(np.concatenate((y_pred.reshape(len(y_pred), 1), y_test.reshape(len(y_test),1)), 1))
     # printing r2_score based on test and prediction values. Our performance increases when this score goes to 1.
     print(r2_score(y_test, y_pred))
 
 
-# This method makes multiple linear regression. It takes two array, X dependant variable and y independent variable.
+# This method makes multiple linear regression. It takes two array, X independent variable and y dependent variable.
 # It does not return anything, just prints the r2_score that this prediction has.
 def multiple_linear_regression(X, y):
     # splitting dataset into train and test. We take 20 percent of the train data to test our result.
@@ -89,11 +91,12 @@ def multiple_linear_regression(X, y):
     regressor.fit(X_train, y_train)
     # making prediction based on X_test
     y_pred = regressor.predict(X_test)
+    print(np.concatenate((y_pred.reshape(len(y_pred), 1), y_test.reshape(len(y_test),1)), 1))
     # printing r2_score based on test and prediction values. Our performance increases when this score goes to 1.
     print(r2_score(y_test, y_pred))
 
 
-# This method makes support vector regression. It take two array, X dependant variable and y independent variable.
+# This method makes support vector regression. It take two array, X independent variable and y dependent variable.
 # It does not return anything, just prints the r2_score that this prediction has.
 def support_vector_regression(X, y):
     # Reshaping y to make it 2d array. This line triggers a warning in console. Found out it was libraries version
@@ -119,11 +122,12 @@ def support_vector_regression(X, y):
     regressor.fit(X_train, y_train)
     # Making prediction. Note that we needed to use scale and give it a X_test in order to make this prediction.
     y_pred = sc_y.inverse_transform(regressor.predict(sc_X.transform(X_test)))
+    print(np.concatenate((y_pred.reshape(len(y_pred), 1), y_test.reshape(len(y_test),1)), 1))
     # printing r2_score based on test and prediction values. Our performance increases when this score goes to 1.
     print(r2_score(y_test, y_pred))
 
 
-# This method makes decision tree regression. It takes two array, X dependant variable and y independent variable.
+# This method makes decision tree regression. It takes two array, X independent variable and y dependant variable.
 # It does not return anything, just prints the r2_score that this prediction has.
 def decision_tree_regression(X, y):
     # splitting dataset into train and test. We take 20 percent of the train data to test our result.
@@ -136,6 +140,7 @@ def decision_tree_regression(X, y):
     regressor.fit(X_train, y_train)
     # Making prediction.
     y_pred = regressor.predict(X_test)
+    print(np.concatenate((y_pred.reshape(len(y_pred), 1), y_test.reshape(len(y_test),1)), 1))
     # printing r2_score based on test and prediction values. Our performance increases when this score goes to 1.
     print(r2_score(y_test, y_pred))
 
@@ -159,3 +164,4 @@ support_vector_regression(X_1, y_1)
 # https://www.kaggle.com/dileep070/heart-disease-prediction-using-logistic-regression
 # https://www.kaggle.com/rashikrahmanpritom/heart-attack-analysis-prediction-dataset
 # https://www.kaggle.com/sansuthi/world-population-by-year
+# https://www.kaggle.com/andonians/random-linear-regression?select=train.csv
