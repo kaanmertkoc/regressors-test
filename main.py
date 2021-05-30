@@ -1,10 +1,7 @@
 import numpy as np
-import matplotlib.pyplot as plt
 import pandas as pd
-from sklearn.impute import SimpleImputer
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder
-from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.preprocessing import PolynomialFeatures
@@ -36,25 +33,25 @@ y_1 = dataset.iloc[:, -1].values
 # This method makes polynomial regression prediction. It takes two array, X independent variable and y dependent
 # variable. It does not return anything it prints the r2_score that this prediction has.
 def polynomial_regressor(X, y):
-    # splitting dataset into train and test. We take 20 percent of the train data to test our result.
-    # Random state is zero, if it's not it takes that 20 percent of data randomly, so in each execution result might
-    # be different and that could cause inconsistency.
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
-    # Calls polynomial regression with the degree of four.
-    poly_reg = PolynomialFeatures(degree=4)
-    # Transforming our train data to make polynomial regression.
-    X_poly = poly_reg.fit_transform(X_train)
-    # Since all regressions created upon linear regression. See report for details.
-    regressor = LinearRegression()
-    # fits our polynomial data and train data.
-    regressor.fit(X_poly, y_train)
-    # making prediction based on polynomial.
-    y_pred = regressor.predict(poly_reg.transform(X_test))
-    # making our print prettier, although we don't print any array at the moment.
-    np.set_printoptions(precision=2)
-    print(np.concatenate((y_pred.reshape(len(y_pred), 1), y_test.reshape(len(y_test),1)), 1))
-    # printing r2_score based on test and prediction values. Our performance increases when this score goes to 1.
-    print(r2_score(y_test, y_pred))
+        # splitting dataset into train and test. We take 20 percent of the train data to test our result.
+        # Random state is zero, if it's not it takes that 20 percent of data randomly, so in each execution result might
+        # be different and that could cause inconsistency.
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
+        # Calls polynomial regression with the degree of four.
+        poly_reg = PolynomialFeatures(degree=4)
+        # Transforming our train data to make polynomial regression.
+        X_poly = poly_reg.fit_transform(X_train)
+        # Since all regressions created upon linear regression. See report for details.
+        regressor = LinearRegression()
+        # fits our polynomial data and train data.
+        regressor.fit(X_poly, y_train)
+        # making prediction based on polynomial.
+        y_pred = regressor.predict(poly_reg.transform(X_test))
+        # making our print prettier, although we don't print any array at the moment.
+        np.set_printoptions(precision=2)
+        # print(np.concatenate((y_pred.reshape(len(y_pred), 1), y_test.reshape(len(y_test),1)), 1))
+        # printing r2_score based on test and prediction values. Our performance increases when this score goes to 1.
+        print(r2_score(y_test, y_pred))
 
 
 # This method makes random forest regression prediction. It takes two array, X independent variable and y dependent
@@ -72,7 +69,7 @@ def random_forest_regression(X, y):
     y_pred = regressor.predict(X_test)
     # making our print prettier, although we don't print any array at the moment.
     np.set_printoptions(precision=2)
-    print(np.concatenate((y_pred.reshape(len(y_pred), 1), y_test.reshape(len(y_test),1)), 1))
+    # print(np.concatenate((y_pred.reshape(len(y_pred), 1), y_test.reshape(len(y_test),1)), 1))
     # printing r2_score based on test and prediction values. Our performance increases when this score goes to 1.
     print(r2_score(y_test, y_pred))
 
@@ -87,11 +84,13 @@ def multiple_linear_regression(X, y):
     # Calls linear regression, but when we give more than one data in X. This class knows that we want to do multiple
     # linear regression.
     regressor = LinearRegression()
+
     # Fits our multiple regression data and train data.
     regressor.fit(X_train, y_train)
     # making prediction based on X_test
     y_pred = regressor.predict(X_test)
-    print(np.concatenate((y_pred.reshape(len(y_pred), 1), y_test.reshape(len(y_test),1)), 1))
+    np.set_printoptions(precision=2)
+    # print(np.concatenate((y_pred.reshape(len(y_pred), 1), y_test.reshape(len(y_test), 1)), 1))
     # printing r2_score based on test and prediction values. Our performance increases when this score goes to 1.
     print(r2_score(y_test, y_pred))
 
@@ -122,7 +121,8 @@ def support_vector_regression(X, y):
     regressor.fit(X_train, y_train)
     # Making prediction. Note that we needed to use scale and give it a X_test in order to make this prediction.
     y_pred = sc_y.inverse_transform(regressor.predict(sc_X.transform(X_test)))
-    print(np.concatenate((y_pred.reshape(len(y_pred), 1), y_test.reshape(len(y_test),1)), 1))
+    np.set_printoptions(precision=2)
+    # print(np.concatenate((y_pred.reshape(len(y_pred), 1), y_test.reshape(len(y_test),1)), 1))
     # printing r2_score based on test and prediction values. Our performance increases when this score goes to 1.
     print(r2_score(y_test, y_pred))
 
@@ -140,7 +140,7 @@ def decision_tree_regression(X, y):
     regressor.fit(X_train, y_train)
     # Making prediction.
     y_pred = regressor.predict(X_test)
-    print(np.concatenate((y_pred.reshape(len(y_pred), 1), y_test.reshape(len(y_test),1)), 1))
+    # print(np.concatenate((y_pred.reshape(len(y_pred), 1), y_test.reshape(len(y_test),1)), 1))
     # printing r2_score based on test and prediction values. Our performance increases when this score goes to 1.
     print(r2_score(y_test, y_pred))
 
@@ -158,10 +158,3 @@ polynomial_regressor(X_1, y_1)
 random_forest_regression(X_1, y_1)
 multiple_linear_regression(X_1, y_1)
 support_vector_regression(X_1, y_1)
-
-# https://www.kaggle.com/mirichoi0218/insurance
-# https://www.kaggle.com/harlfoxem/housesalesprediction
-# https://www.kaggle.com/dileep070/heart-disease-prediction-using-logistic-regression
-# https://www.kaggle.com/rashikrahmanpritom/heart-attack-analysis-prediction-dataset
-# https://www.kaggle.com/sansuthi/world-population-by-year
-# https://www.kaggle.com/andonians/random-linear-regression?select=train.csv
